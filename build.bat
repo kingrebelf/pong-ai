@@ -1,6 +1,9 @@
 @echo off
 echo Building Pong Executable...
 echo.
+echo Upgrading pip...
+py -m pip install --upgrade pip
+echo.
 echo Installing dependencies...
 py -m pip install pygame-ce pyinstaller
 echo.
