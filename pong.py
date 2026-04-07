@@ -1,7 +1,8 @@
 import pygame
 import random
 import sys
-import numpy as np
+import math
+import array
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -44,12 +45,13 @@ class PongGame:
         sample_rate = 44100
         duration = 0.1
         n_samples = int(sample_rate * duration)
-        t = np.linspace(0, duration, n_samples, False)
 
         def create_beep(freq):
-            sine_wave = np.sin(2 * np.pi * freq * t)
-            audio = (sine_wave * 32767).astype(np.int16)
-            sound = pygame.sndarray.make_sound(audio)
+            buf = array.array('h', [0] * n_samples)
+            for i in range(n_samples):
+                t = i / sample_rate
+                buf[i] = int(32767 * math.sin(2 * math.pi * freq * t))
+            sound = pygame.mixer.Sound(buffer=buf)
             return sound
 
         sounds['hit'] = create_beep(440)
